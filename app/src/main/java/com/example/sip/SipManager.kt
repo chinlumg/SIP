@@ -30,7 +30,7 @@ class SipManager(context: Context) {
     private val _call = MutableStateFlow(CallInfo())
     val call: StateFlow<CallInfo> = _call.asStateFlow()
 
-    private val factory = Factory.instance()
+    private val factory = Factory.instance().apply { setDebugMode(true, "SIP") }
     private val core: Core = factory.createCore(null, null, context)
 
     private val listener = object : CoreListenerStub() {
@@ -104,7 +104,8 @@ class SipManager(context: Context) {
 
     fun dial(number: String) {
         val domain = core.defaultAccount?.params?.identityAddress?.domain ?: return
-        val target = if (number.contains("@")) "sip:$number" else "sip:$number@$domain"
+        val id = number.removePrefix("sip:")
+        val target = if (id.contains("@")) "sip:$id" else "sip:$id@$domain"
         core.invite(target)
     }
 

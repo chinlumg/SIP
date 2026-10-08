@@ -70,7 +70,7 @@ fun DialScreen(micGranted: Boolean, onDial: (String) -> Unit, onLogout: () -> Un
         Text("撥號", style = MaterialTheme.typography.headlineMedium)
         OutlinedTextField(number, { number = it }, label = { Text("號碼或 SIP 位址") },
             singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Uri),
             modifier = Modifier.fillMaxWidth())
         if (!micGranted) {
             Text("需要麥克風權限才能撥打", color = MaterialTheme.colorScheme.error)
